@@ -28,6 +28,9 @@
   {{ 'quick-order-list.css' | asset_url | stylesheet_tag }}
   {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {%- endunless -%}
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
 {%- if card_product and card_product and card_product_variant and card_product_variant != empty -%}
   {%- liquid
     assign ratio = 1
@@ -42,8 +45,8 @@
   -%}
 
   <script>
-    console.log("Single Card Variant: ", {{ card_product_variant | json }});
-    console.log("Single Card Product: ", {{ card_product | json }});
+    // console.log("Single Card Variant: ", {{ card_product_variant | json }});
+    // console.log("Single Card Product: ", {{ card_product | json }});
     // console.log("Second Image: ", {{ second_image }});
   </script>
   <div class="card-wrapper product-card-wrapper underline-links-hover">
@@ -228,11 +231,11 @@
             <div class="variant-sizes">
               {% for variant in card_product.variants %}
                 {% if variant.option1 == card_product_variant.option1 %}
-                  <form action="/cart/add" method="post" class="variant-form" data-variant-id="{{ variant.id }}">
+                  <form class="variant-form" action="/cart/add" method="post" data-variant-id="{{ variant.id }}">
                     <input type="hidden" name="id" value="{{ variant.id }}">
                     <button
                       type="submit"
-                      class="variant-size {% if variant.available == false %}out-of-stock{% endif %}"
+                      class="variant-size {% if variant.available == false %} out-of-stock out-of-stock-custom{% endif %}"
                       {% if variant.available == false %}
                         disabled
                       {% endif %}

@@ -3593,12 +3593,29 @@ details-disclosure > details {
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 0 50px;
-  background-color: rgb(214, 172, 172);
   z-index: 10;
 }
 
-.variant-sizes:hover {
-  background-color: yellow;
+.variant-sizes button {
+  background: transparent;
+  color: black;
+  padding: 2px 4px;
+  width: 30px;
+  
+}
+
+.out-of-stock-custom{
+  text-decoration: line-through;
+  pointer-events: none;
+}
+
+
+.variant-sizes button:hover {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: black;
+  color: white;
+  
 }
 
 @keyframes indeterminateAnimation {
