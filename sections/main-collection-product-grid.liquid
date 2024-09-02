@@ -155,8 +155,20 @@
               "
             >
               {% assign skip_card_product_styles = false %}
+
+              {%- assign secondary_images_array = '' | split: ',' -%}
+
+              {%- for product in collection.products -%}
+                {% for variant in product.variants %}
+                  {% if variant.option2 == 'S' %}
+                    {% assign secondary_images = secondary_images_array | append: variant.featured_media.src %}
+                  {% endif %}
+                {% endfor %}
+              {%- endfor -%}
+
               {% comment %} An array to store rendered colors {% endcomment %}
               {%- assign rendered_colors = '' | split: ',' -%}
+              {%- assign image_index = 0 -%}
               {% comment %} Start of Loop for Products in Collection {% endcomment %}
               {%- for product in collection.products -%}
                 {% for variant in product.variants %}
@@ -178,6 +190,7 @@
                       {% render 'card-product',
                         card_product: product,
                         card_product_variant: variant,
+                        second_image: secondary_images_array[image_index],
                         media_aspect_ratio: section.settings.image_ratio,
                         image_shape: section.settings.image_shape,
                         show_secondary_image: section.settings.show_secondary_image,
@@ -191,6 +204,7 @@
                     </li>
                     {% comment %} Add unique_variant to array {% endcomment %}
                     {% assign rendered_colors = rendered_colors | append: unique_variant | append: ',' %}
+                    {% assign image_index = image_index | plus: 1 %}
                   {% endunless %}
                   {%- assign skip_card_product_styles = true -%}
                 {%- endfor -%}
@@ -212,10 +226,15 @@
 
 <script>
   var products = {{ collection.products | json }};
-  console.log(products);
+  // console.log(products);
 
   var variants = {{ collection.products[0].variants | json }};
-  console.log("Variants: ", variants);
+  // console.log("Variants: ", variants);
+
+  var variant = {{ collection.products[0].variants[0] | json }};
+  // console.log("Variant: ", variant);
+
+  console.log("Array 1: ", secondary_images);
 </script>
 
 {% schema %}
