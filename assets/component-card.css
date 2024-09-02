@@ -416,7 +416,6 @@
   display: flex;
   gap: 5px;
   background-color: rgb(21, 166, 161); /* Ensure background color is visible */
-  padding: 10px; /* Adjust padding if needed */
   border-radius: 5px; /* Optional: Add rounded corners */
   z-index: 20;
 }
@@ -426,7 +425,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 0 50px;
+  padding: 10px 50px;
   z-index: 10;
 }
 
