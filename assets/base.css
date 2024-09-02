@@ -1157,7 +1157,7 @@ summary::-webkit-details-marker {
   border-radius: 50%;
 }
 
-.media.media--hover-effect > img + img {
+.media.media--hover-effect > img + div {
   opacity: 0;
 }
 
@@ -3398,7 +3398,7 @@ details-disclosure > details {
     background-image: var(--easter-egg);
     background-size: 250px 250px;
     mix-blend-mode: color-dodge;
-    pointer-events: none;
+    /* pointer-events: none; */
     z-index: 2;
   }
 
@@ -3415,7 +3415,7 @@ details-disclosure > details {
     right: 0;
   }
 
-  .animate--hover-3d-lift .card-wrapper .card--card:before,
+/*   .animate--hover-3d-lift .card-wrapper .card--card:before,
   .animate--hover-3d-lift .card-wrapper .card--standard .card__media:after {
     content: '';
     position: absolute;
@@ -3436,10 +3436,10 @@ details-disclosure > details {
       rgba(255, 255, 255, 1) 50%,
       rgba(255, 255, 255, 0) 55%
     );
-  }
+  } */
 
   .animate--hover-3d-lift .card-wrapper:hover .card--card:before,
-  .animate--hover-3d-lift .card-wrapper:hover .card--standard .card__media:after {
+  .animate--hover-3d-lift .card-wrapper:hover .card--standard .card__media .variant-overlay:after{
     opacity: 0.2;
     transition: background-position 6s ease, opacity var(--duration-long) ease;
     background-position: left;
@@ -3588,35 +3588,6 @@ details-disclosure > details {
 }
 
 
-.variant-sizes{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 0 50px;
-  z-index: 10;
-}
-
-.variant-sizes button {
-  background: transparent;
-  color: black;
-  padding: 2px 4px;
-  width: 30px;
-  
-}
-
-.out-of-stock-custom{
-  text-decoration: line-through;
-  pointer-events: none;
-}
-
-
-.variant-sizes button:hover {
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: black;
-  color: white;
-  
-}
 
 @keyframes indeterminateAnimation {
   0% {

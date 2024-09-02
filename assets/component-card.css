@@ -118,7 +118,7 @@
 }
 
 .card--media .card__inner .card__content {
-  position: relative;
+  /* position: relative; */
   padding: calc(var(--image-padding) + 1rem);
 }
 
@@ -309,6 +309,21 @@
   margin-bottom: 0;
 }
 
+.hovered-div {
+  z-index: 20;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* Initially hidden */
+  transition: opacity var(--duration-long) ease;
+}
+
+
 .card--horizontal .card__heading,
 .card--horizontal .price__container .price-item,
 .card--horizontal__quick-add {
@@ -380,6 +395,63 @@
   box-shadow: none;
   outline: 0;
 } */
+
+.card-wrapper:hover .hovered-div {
+  opacity: 1; /* Show on hover */
+  
+}
+
+.hovered-div img {
+  width: 100%;
+  height: auto; /* Adjust as needed */
+  object-fit: cover;
+}
+
+.variant-overlay {
+  width: 100%;
+  position: absolute;
+  bottom: 5%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, 50%); /* Adjust for exact center alignment */
+  display: flex;
+  gap: 5px;
+  background-color: rgb(21, 166, 161); /* Ensure background color is visible */
+  padding: 10px; /* Adjust padding if needed */
+  border-radius: 5px; /* Optional: Add rounded corners */
+  z-index: 20;
+}
+
+
+.variant-sizes{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 50px;
+  z-index: 10;
+}
+
+.variant-sizes button {
+  background: transparent;
+  color: black;
+  padding: 2px 4px;
+  width: 30px;
+  
+}
+
+.out-of-stock-custom{
+  text-decoration: line-through;
+  pointer-events: none;
+}
+
+
+.variant-sizes button:hover {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: black;
+  color: white;
+  
+}
+
 
 @media screen and (min-width: 990px) {
   .card .media.media--hover-effect > img:only-child,
