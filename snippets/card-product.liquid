@@ -157,6 +157,27 @@
           </div>
         </div>
       </div>
+
+      {% comment %} Variant Sizes {% endcomment %}
+      <div class="variant-overlay variant-sizes">
+        {% for variant in card_product.variants %}
+          {% if variant.option1 == card_product_variant.option1 %}
+            <form class="variant-form" action="/cart/add" method="post" data-variant-id="{{ variant.id }}">
+              <input type="hidden" name="id" value="{{ variant.id }}">
+              <button
+                type="submit"
+                class="variant-size {% if variant.available == false %} out-of-stock out-of-stock-custom{% endif %}"
+                {% if variant.available == false %}
+                  disabled
+                {% endif %}
+              >
+                {{ variant.option2 }}
+              </button>
+            </form>
+          {% endif %}
+        {% endfor %}
+      </div>
+
       {% comment %} Card Link with Media {% endcomment %}
       <div class="card__content">
         <div class="card__information">
@@ -226,26 +247,6 @@
               show_compare_at_price: false,
               variant: card_product_variant
             %}
-
-            {% comment %} Variant Sizes {% endcomment %}
-            <div class="variant-sizes">
-              {% for variant in card_product.variants %}
-                {% if variant.option1 == card_product_variant.option1 %}
-                  <form class="variant-form" action="/cart/add" method="post" data-variant-id="{{ variant.id }}">
-                    <input type="hidden" name="id" value="{{ variant.id }}">
-                    <button
-                      type="submit"
-                      class="variant-size {% if variant.available == false %} out-of-stock out-of-stock-custom{% endif %}"
-                      {% if variant.available == false %}
-                        disabled
-                      {% endif %}
-                    >
-                      {{ variant.option2 }}
-                    </button>
-                  </form>
-                {% endif %}
-              {% endfor %}
-            </div>
 
             {%- if card_product.quantity_price_breaks_configured? -%}
               {% if card_product.variants.size == 1 and quick_add == 'bulk' %}
