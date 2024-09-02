@@ -106,6 +106,7 @@
             </div>
           </div>
         {%- endif -%}
+        {% comment %} Standard Card No Media Link {% endcomment %}
         <div class="card__content">
           <div class="card__information">
             <h3
@@ -120,7 +121,7 @@
                 class="full-unstyled-link"
                 aria-labelledby="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }} NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
               >
-                {{ card_product.title | escape }}
+                No Meida {{ card_product.title | escape }}
               </a>
             </h3>
           </div>
@@ -143,6 +144,7 @@
           </div>
         </div>
       </div>
+      {% comment %} Card Link {% endcomment %}
       <div class="card__content">
         <div class="card__information">
           <h3

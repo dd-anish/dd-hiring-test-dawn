@@ -124,6 +124,7 @@
           data-cascade
         {% endif %}
       >
+        {% comment %} If No Products in Collection {% endcomment %}
         {%- if collection.products.size == 0 -%}
           <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
             <div class="loading-overlay gradient"></div>
@@ -139,6 +140,7 @@
             </div>
           </div>
         {%- else -%}
+          {% comment %} If there are Products in Collection {% endcomment %}
           <div
             class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
           >
@@ -153,32 +155,37 @@
               "
             >
               {% assign skip_card_product_styles = false %}
+              {% comment %} Start of Loop for Products in Collection {% endcomment %}
               {%- for product in collection.products -%}
-                {% assign lazy_load = false %}
-                {%- if forloop.index > 2 -%}
-                  {%- assign lazy_load = true -%}
-                {%- endif -%}
-                <li
-                  class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-                  {% if settings.animations_reveal_on_scroll %}
-                    data-cascade
-                    style="--animation-order: {{ forloop.index }};"
-                  {% endif %}
-                >
-                  {% render 'card-product',
-                    card_product: product,
-                    media_aspect_ratio: section.settings.image_ratio,
-                    image_shape: section.settings.image_shape,
-                    show_secondary_image: section.settings.show_secondary_image,
-                    show_vendor: section.settings.show_vendor,
-                    show_rating: section.settings.show_rating,
-                    lazy_load: lazy_load,
-                    skip_styles: skip_card_product_styles,
-                    quick_add: section.settings.quick_add,
-                    section_id: section.id
-                  %}
-                </li>
-                {%- assign skip_card_product_styles = true -%}
+                {% for variant in product.variants %}
+                  {% assign lazy_load = false %}
+                  {%- if forloop.index > 2 -%}
+                    {%- assign lazy_load = true -%}
+                  {%- endif -%}
+                  <li
+                    class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                    {% if settings.animations_reveal_on_scroll %}
+                      data-cascade
+                      style="--animation-order: {{ forloop.index }};"
+                    {% endif %}
+                  >
+                    {% comment %} This Renders a Product Card which is a snippet {% endcomment %}
+                    {% render 'card-product',
+                      card_product: product,
+                      card_product_variant: variant,
+                      media_aspect_ratio: section.settings.image_ratio,
+                      image_shape: section.settings.image_shape,
+                      show_secondary_image: section.settings.show_secondary_image,
+                      show_vendor: section.settings.show_vendor,
+                      show_rating: section.settings.show_rating,
+                      lazy_load: lazy_load,
+                      skip_styles: skip_card_product_styles,
+                      quick_add: section.settings.quick_add,
+                      section_id: section.id
+                    %}
+                  </li>
+                  {%- assign skip_card_product_styles = true -%}
+                {%- endfor -%}
               {%- endfor -%}
             </ul>
 
@@ -198,6 +205,9 @@
 <script>
   var products = {{ collection.products | json }};
   console.log(products);
+
+  var variants = {{ collection.products[0].variants | json }};
+  console.log("Variants: ", variants);
 </script>
 
 {% schema %}
