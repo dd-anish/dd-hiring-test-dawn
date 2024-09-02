@@ -117,9 +117,14 @@
   width: 100%;
 }
 
-.card--media .card__inner .card__content {
-  /* position: relative; */
+.card--media .card__inner  .card__content {
+  position: relative;
   padding: calc(var(--image-padding) + 1rem);
+}
+
+.card__media .media .variant-overlay {
+  position: absolute;
+  z-index: 40;
 }
 
 .card__content {
@@ -309,21 +314,6 @@
   margin-bottom: 0;
 }
 
-.hovered-div {
-  z-index: 20;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0; /* Initially hidden */
-  transition: opacity var(--duration-long) ease;
-}
-
-
 .card--horizontal .card__heading,
 .card--horizontal .price__container .price-item,
 .card--horizontal__quick-add {
@@ -396,37 +386,28 @@
   outline: 0;
 } */
 
-.card-wrapper:hover .hovered-div {
+.card-wrapper:hover .variant-overlay {
   opacity: 1; /* Show on hover */
   
 }
 
-.hovered-div img {
-  width: 100%;
-  height: auto; /* Adjust as needed */
-  object-fit: cover;
-}
-
 .variant-overlay {
-  width: 100%;
-  position: absolute;
-  bottom: 5%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, 50%); /* Adjust for exact center alignment */
-  display: flex;
-  gap: 5px;
-  background-color: rgb(21, 166, 161); /* Ensure background color is visible */
-  border-radius: 5px; /* Optional: Add rounded corners */
+  background-color: rgb(21, 166, 161);
+  border-radius: 5px;
   z-index: 20;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0; /* Initially hidden */
+  transition: opacity var(--duration-long) ease;
 }
-
 
 .variant-sizes{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 10px 50px;
-  z-index: 10;
 }
 
 .variant-sizes button {
