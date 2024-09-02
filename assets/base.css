@@ -3587,6 +3587,20 @@ details-disclosure > details {
   display: block;
 }
 
+
+.variant-sizes{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 50px;
+  background-color: rgb(214, 172, 172);
+  z-index: 10;
+}
+
+.variant-sizes:hover {
+  background-color: yellow;
+}
+
 @keyframes indeterminateAnimation {
   0% {
     transform: translateX(-20%) scaleX(0);

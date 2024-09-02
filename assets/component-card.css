@@ -346,14 +346,15 @@
   top: calc(var(--border-width) * -1);
 }
 
-.card__heading a::after {
+/* .card__heading a::after {
+
   bottom: 0;
   content: '';
   left: 0;
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 1;
+  z-index: 0;
 }
 
 .card__heading a:after {
@@ -378,7 +379,7 @@
 .card__heading a:focus {
   box-shadow: none;
   outline: 0;
-}
+} */
 
 @media screen and (min-width: 990px) {
   .card .media.media--hover-effect > img:only-child,

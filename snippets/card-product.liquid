@@ -42,9 +42,9 @@
   -%}
 
   <script>
-    // console.log("Single Card Variant: ", {{ card_product_variant | json }});
-    // console.log("Single Card Product: ", {{ card_product | json }});
-    console.log("Second Image: ", {{ second_image }});
+    console.log("Single Card Variant: ", {{ card_product_variant | json }});
+    console.log("Single Card Product: ", {{ card_product | json }});
+    // console.log("Second Image: ", {{ second_image }});
   </script>
   <div class="card-wrapper product-card-wrapper underline-links-hover">
     <div
@@ -223,6 +223,22 @@
               show_compare_at_price: false,
               variant: card_product_variant
             %}
+
+            {% comment %} Variant Sizes {% endcomment %}
+            <div class="variant-sizes">
+              {% for variant in card_product.variants %}
+                {% if variant.option1 == card_product_variant.option1 %}
+                  <a
+                    href="#"
+                    class="variant-size {% if variant.available == false %}out-of-stock{% endif %}"
+                    data-variant-id="{{ variant.id }}"
+                  >
+                    {{ variant.option2 }}
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+
             {%- if card_product.quantity_price_breaks_configured? -%}
               {% if card_product.variants.size == 1 and quick_add == 'bulk' %}
                 {% liquid
