@@ -228,13 +228,18 @@
             <div class="variant-sizes">
               {% for variant in card_product.variants %}
                 {% if variant.option1 == card_product_variant.option1 %}
-                  <a
-                    href="#"
-                    class="variant-size {% if variant.available == false %}out-of-stock{% endif %}"
-                    data-variant-id="{{ variant.id }}"
-                  >
-                    {{ variant.option2 }}
-                  </a>
+                  <form action="/cart/add" method="post" class="variant-form" data-variant-id="{{ variant.id }}">
+                    <input type="hidden" name="id" value="{{ variant.id }}">
+                    <button
+                      type="submit"
+                      class="variant-size {% if variant.available == false %}out-of-stock{% endif %}"
+                      {% if variant.available == false %}
+                        disabled
+                      {% endif %}
+                    >
+                      {{ variant.option2 }}
+                    </button>
+                  </form>
                 {% endif %}
               {% endfor %}
             </div>
