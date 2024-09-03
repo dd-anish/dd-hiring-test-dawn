@@ -120,16 +120,29 @@
           <div class="variant-overlay variant-sizes" data-product-id="{{ card_product.id }}">
             {% for variant in card_product.variants %}
               {% if variant.option1 == card_product_variant.option1 %}
-                <button
-                  type="button"
-                  class="variant-size js-variant-select {% if variant.available == false %}out-of-stock{% endif %}"
-                  data-variant-id="{{ variant.id }}"
-                  {% if variant.available == false %}
-                    disabled
-                  {% endif %}
-                >
-                  {{ variant.option2 }}
-                </button>
+                <product-form class="product-form" data-section-id="{{ section.id }}">
+                  <form class="variant-form" action="/cart/add" method="post">
+                    <input type="hidden" name="id" value="{{ variant.id }}">
+                    <button
+                      type="submit"
+                      class="variant-size {% if variant.available == false %} out-of-stock out-of-stock-custom{% endif %}"
+                      {% if variant.available == false %}
+                        disabled
+                      {% endif %}
+                    >
+                      {{ variant.option2 }}
+                    </button>
+                  </form>
+                  <div class="product-form__error-message-wrapper" role="alert" hidden>
+                    <span class="svg-wrapper">
+                      {{- 'icon-error.svg' | inline_asset_content -}}
+                    </span>
+                    <span class="product-form__error-message"></span>
+                    <div class="loading__spinner hidden">
+                      {%- render 'loading-spinner' -%}
+                    </div>
+                  </div>
+                </product-form>
               {% endif %}
             {% endfor %}
           </div>
