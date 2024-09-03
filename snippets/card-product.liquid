@@ -29,8 +29,6 @@
   {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {%- endunless -%}
 
-<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-
 {%- if card_product and card_product and card_product_variant and card_product_variant != empty -%}
   {%- liquid
     assign ratio = 1
@@ -47,8 +45,8 @@
   <script>
     // console.log("Single Card Variant: ", {{ card_product_variant | json }});
     // console.log("Single Card Product: ", {{ card_product | json }});
-    console.log("First Image: ", {{ card_product_variant | json }});
-    console.log("Second Image: ", {{ second_image | json }});
+    // console.log("First Image: ", {{ card_product_variant | json }});
+    // console.log("Second Image: ", {{ second_image | json }});
   </script>
   <div class="card-wrapper product-card-wrapper underline-links-hover">
     <div
@@ -119,21 +117,19 @@
           </div>
 
           {% comment %} Variant Sizes {% endcomment %}
-          <div class="variant-overlay variant-sizes">
+          <div class="variant-overlay variant-sizes" data-product-id="{{ card_product.id }}">
             {% for variant in card_product.variants %}
               {% if variant.option1 == card_product_variant.option1 %}
-                <form class="variant-form" action="/cart/add" method="post" data-variant-id="{{ variant.id }}">
-                  <input type="hidden" name="id" value="{{ variant.id }}">
-                  <button
-                    type="submit"
-                    class="variant-size {% if variant.available == false %} out-of-stock out-of-stock-custom{% endif %}"
-                    {% if variant.available == false %}
-                      disabled
-                    {% endif %}
-                  >
-                    {{ variant.option2 }}
-                  </button>
-                </form>
+                <button
+                  type="button"
+                  class="variant-size js-variant-select {% if variant.available == false %}out-of-stock{% endif %}"
+                  data-variant-id="{{ variant.id }}"
+                  {% if variant.available == false %}
+                    disabled
+                  {% endif %}
+                >
+                  {{ variant.option2 }}
+                </button>
               {% endif %}
             {% endfor %}
           </div>
@@ -668,3 +664,13 @@
     </div>
   </div>
 {%- endif -%}
+
+<script>
+    // Initialize the VariantAddToCart functionality
+  {% comment %}   document.addEventListener('DOMContentLoaded', () => {
+      const variantContainers = document.querySelectorAll('.variant-overlay');
+      variantContainers.forEach((container) => {
+        new VariantAddToCart(container);
+      });
+    }); {% endcomment %}
+</script>

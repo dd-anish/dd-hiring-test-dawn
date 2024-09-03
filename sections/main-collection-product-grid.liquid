@@ -10,6 +10,8 @@
   {{ 'quick-add.css' | asset_url | stylesheet_tag }}
 {%- endunless -%}
 
+<script src="{{ 'variant-add-to-cart.js' | asset_url }}" defer="defer"></script>
+
 {%- if section.settings.quick_add == 'standard' -%}
   <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
@@ -221,10 +223,10 @@
   // console.log(products);
 
   var variants = {{ collection.products[0].variants | json }};
-  console.log("Variants: ", variants);
+  // console.log("Variants: ", variants);
 
   var variant = {{ collection.products[0].variants[0] | json }};
-  console.log("Variant: ", variant);
+  // console.log("Variant: ", variant);
 </script>
 
 {% schema %}
