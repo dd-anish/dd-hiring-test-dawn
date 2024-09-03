@@ -30,7 +30,6 @@
   assign price_min = product.price_min
   assign price_max = product.price_max
   assign available = target.available | default: false
-  assign variant_available = target_variant.available | default: false
   assign money_price = price | money
   assign variant_money_price = variant_price | money
   assign money_price_min = price_min | money
@@ -53,7 +52,7 @@
       price
       {%- if price_class %} {{ price_class }}{% endif -%}
       {%- if available == false %} price--sold-out{% endif -%}
-      {%- if variant_compare_at_price > variant_price and product.quantity_price_breaks_configured? != true %} price--on-sale{% endif -%}
+      {%- if variant_compare_at_price > variant_price and product.quantity_price_breaks_configured? != true and show_compare_at_price %} price--on-sale{% endif -%}
       {%- if compare_at_price > price and product.quantity_price_breaks_configured? %} volume-pricing--sale-badge{% endif -%}
       {%- if product.price_varies == false and product.compare_at_price_varies %} price--no-compare{% endif -%}
       {%- if show_badges %} price--show-badge{% endif -%}
