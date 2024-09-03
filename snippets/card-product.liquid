@@ -206,9 +206,11 @@
             >
               {% comment %} Display Product Title + Variant Option 1 {% endcomment %}
               {{ card_product.title | escape }} (
+
               {% assign color_key = 'general.colors.' | append: card_product_variant.option1 %}
-              {{ color_key | t | default: card_product_variant.option1 }}
-              )
+              {{ color_key | t | default: card_product_variant.option1 }})
+
+              {% comment %} {{ card_product_variant.option1 | t }}) {% endcomment %}
             </a>
           </h3>
           <div class="card-information">
