@@ -420,7 +420,7 @@
 }
 
 .variant-sizes .variant-size {
-  background: transparent;
+  background-color: rgb(155, 152, 152);
   color: black;
   padding: 2px 4px;
   width: 40px;
@@ -432,22 +432,22 @@
 .variant-sizes .out-of-stock{
   text-decoration: line-through;
   /* pointer-events: none; */
-  background-color: rgb(155, 152, 152);
+  background: transparent;
+  color: black;
 }
 
 
 .variant-sizes .variant-size:hover {
   cursor: pointer;
   transition: all 0.3s ease;
-  background: black;
+  background-color: rgb(65, 63, 63);
   color: white;
 }
 
 .variant-sizes .out-of-stock:hover{
   cursor: not-allowed;
-  transition: all 0.3s ease;
-  background: rgb(155, 152, 152);;
-  color: inherit;
+  background: transparent;
+  color: black;
 }
 
 
