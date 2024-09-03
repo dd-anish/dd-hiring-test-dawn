@@ -411,7 +411,15 @@
   padding: 10px;
 }
 
-.variant-sizes button {
+.variant-sizes-heading{
+  width: 100%;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.variant-sizes .variant-size {
   background: transparent;
   color: black;
   padding: 2px 4px;
@@ -421,19 +429,27 @@
   
 }
 
-.out-of-stock-custom{
+.variant-sizes .out-of-stock{
   text-decoration: line-through;
-  pointer-events: none;
+  /* pointer-events: none; */
+  background-color: rgb(155, 152, 152);
 }
 
 
-.variant-sizes button:hover {
+.variant-sizes .variant-size:hover {
   cursor: pointer;
   transition: all 0.3s ease;
   background: black;
   color: white;
-  
 }
+
+.variant-sizes .out-of-stock:hover{
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+  background: rgb(155, 152, 152);;
+  color: inherit;
+}
+
 
 
 @media screen and (min-width: 990px) {

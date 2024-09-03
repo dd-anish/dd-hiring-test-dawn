@@ -118,6 +118,7 @@
 
           {% comment %} Variant Sizes {% endcomment %}
           <div class="variant-overlay variant-sizes" data-product-id="{{ card_product.id }}">
+            <div class="variant-sizes-heading">Directly add size variant to cart</div>
             {% for variant in card_product.variants %}
               {% if variant.option1 == card_product_variant.option1 %}
                 <product-form class="product-form" data-section-id="{{ section.id }}">
@@ -125,7 +126,7 @@
                     <input type="hidden" name="id" value="{{ variant.id }}">
                     <button
                       type="submit"
-                      class="variant-size {% if variant.available == false %} out-of-stock out-of-stock-custom{% endif %}"
+                      class="variant-size {% if variant.available == false %} out-of-stock {% endif %}"
                       {% if variant.available == false %}
                         disabled
                       {% endif %}
