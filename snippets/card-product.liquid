@@ -210,7 +210,10 @@
               {% assign color_key = 'general.colors.' | append: card_product_variant.option1 %}
               {{ color_key | t | default: card_product_variant.option1 }})
 
-              {% comment %} {{ card_product_variant.option1 | t }}) {% endcomment %}
+              {% comment %}
+                  The direct use of | t doesn't work
+                {{ card_product_variant.option1 | t }})
+              {% endcomment %}
             </a>
           </h3>
           <div class="card-information">
