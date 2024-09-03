@@ -1,5 +1,16 @@
 {
   "general": {
+    "colors": {
+      "Red": "Red",
+      "Blue": "Blue",
+      "Green": "Green",
+      "Yellow": "Yellow",
+      "Black": "Black",
+      "White": "White",
+      "Gray": "Gray",
+      "Purple": "Purple"
+ 
+    },
     "password_page": {
       "login_form_heading": "Enter store using password:",
       "login_password_button": "Enter using password",
@@ -105,6 +116,17 @@
     "collection_title": "Your collection's name"
   },
   "products": {
+
+    "colors": {
+      "Red": "Rouge",
+      "Blue": "Bleu",
+      "Green": "Vert",
+      "Yellow": "Jaune",
+      "Black": "Noir",
+      "White": "Blanc"
+ 
+    },
+
     "product": {
       "add_to_cart": "Add to cart",
       "choose_options": "Choose options",
