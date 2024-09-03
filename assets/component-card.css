@@ -406,15 +406,17 @@
 .variant-sizes{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 10px 50px;
+  justify-content: space-around;
+  padding: 10px 20px;
 }
 
 .variant-sizes button {
   background: transparent;
   color: black;
   padding: 2px 4px;
-  width: 30px;
+  width: 40px;
+  border: 1px solid black;
+  border-radius: 10px;
   
 }
 

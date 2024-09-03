@@ -159,11 +159,14 @@
               {% comment %} Start of Loop for Products in Collection {% endcomment %}
               {%- for product in collection.products -%}
                 {% assign color_variants = product.variants | map: 'option1' | uniq %}
+
                 {% for color in color_variants %}
                   {% assign color_variant = product.variants | where: 'option1', color | first %}
+
                   {%- if forloop.index > 2 -%}
                     {%- assign lazy_load = true -%}
                   {%- endif -%}
+
                   {% comment %} Find the correct second image for this color variant {% endcomment %}
                   {% assign second_image = null %}
                   {% for variant in product.variants %}
@@ -172,13 +175,6 @@
                       {% break %}
                     {% endif %}
                   {% endfor %}
-
-                  {% comment %} If no 'S' size variant found, use the first variant's image as second_image {% endcomment %}
-                  {% comment %}
-                    {% unless second_image %}
-                      {% assign second_image = color_variant.featured_image %}
-                    {% endunless %}
-                  {% endcomment %}
 
                   <li
                     class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
@@ -199,7 +195,6 @@
                       skip_styles: skip_card_product_styles,
                       quick_add: section.settings.quick_add,
                       section_id: section.id,
-                      first_image: color_variant,
                       second_image: second_image
                     %}
                   </li>
