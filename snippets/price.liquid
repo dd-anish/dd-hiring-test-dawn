@@ -15,6 +15,7 @@
 {%- liquid
   if use_variant
     assign target = product.selected_or_first_available_variant
+    assign target_variant = variant
   elsif placeholder
     assign target = null
   else
@@ -23,9 +24,9 @@
   endif
 
   assign compare_at_price = target.compare_at_price
-  assign variant_compare_at_price = target_variant.compare_at_price | default: 160
+  assign variant_compare_at_price = target_variant.compare_at_price
   assign price = target.price | default: 1999
-  assign variant_price = target_variant.price | default: 99
+  assign variant_price = target_variant.price
   assign price_min = product.price_min
   assign price_max = product.price_max
   assign available = target.available | default: false
@@ -52,7 +53,7 @@
       price
       {%- if price_class %} {{ price_class }}{% endif -%}
       {%- if available == false %} price--sold-out{% endif -%}
-      {%- if compare_at_price > price and product.quantity_price_breaks_configured? != true %} price--on-sale{% endif -%}
+      {%- if variant_compare_at_price > variant_price and product.quantity_price_breaks_configured? != true %} price--on-sale{% endif -%}
       {%- if compare_at_price > price and product.quantity_price_breaks_configured? %} volume-pricing--sale-badge{% endif -%}
       {%- if product.price_varies == false and product.compare_at_price_varies %} price--no-compare{% endif -%}
       {%- if show_badges %} price--show-badge{% endif -%}
@@ -99,7 +100,7 @@
       </div>
       {% comment %} When there is a Sale {% endcomment %}
       <div class="price__sale">
-        {%- unless product.price_varies == false and product.compare_at_price_varies %}
+        {%- unless product.price_varies == false and variant.compare_at_price_varies %}
           <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
           <span>
             <s class="price-item price-item--regular">
