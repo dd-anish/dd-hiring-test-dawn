@@ -10,8 +10,6 @@
   {{ 'quick-add.css' | asset_url | stylesheet_tag }}
 {%- endunless -%}
 
-{% comment %} <script src="{{ 'variant-add-to-cart.js' | asset_url }}" defer="defer"></script> {% endcomment %}
-
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
 {%- if section.settings.quick_add == 'standard' -%}
