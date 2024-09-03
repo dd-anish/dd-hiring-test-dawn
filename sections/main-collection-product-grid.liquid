@@ -160,11 +160,15 @@
 
               {% comment %} Start of Loop for Products in Collection {% endcomment %}
               {%- for product in collection.products -%}
+                {% comment %} map to only option1 which is color of product and keep only unique colors {% endcomment %}
                 {% assign color_variants = product.variants | map: 'option1' | uniq %}
 
+                {% comment %} Just loop based on unique colors {% endcomment %}
                 {% for color in color_variants %}
+                  {% comment %} find the first variant that matches the current color using the where filter {% endcomment %}
                   {% assign color_variant = product.variants | where: 'option1', color | first %}
 
+                  {% comment %} lazy loading for performance optimization (was by default) {% endcomment %}
                   {%- if forloop.index > 2 -%}
                     {%- assign lazy_load = true -%}
                   {%- endif -%}
@@ -185,6 +189,7 @@
                       style="--animation-order: {{ forloop.index }};"
                     {% endif %}
                   >
+                    {% comment %} Render the Product Snippet for this unique color variant {% endcomment %}
                     {% render 'card-product',
                       card_product: product,
                       card_product_variant: color_variant,
