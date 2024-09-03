@@ -407,7 +407,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding: 10px 20px;
+  gap:2px;
+  padding: 10px;
 }
 
 .variant-sizes button {
