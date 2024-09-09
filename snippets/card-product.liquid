@@ -92,7 +92,29 @@
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
 
               {% comment %} Hover Image (Custom for Task) {% endcomment %}
-              {% if second_image != null and display_variants_as_different_cards %}
+              {% if display_variants_as_different_cards %}
+                {% for variant in variant_product.variants %}
+                  {% if variant.options[color_index] == card_product.options[color_index] %}
+                    <!-- Iterate through each size variant for this color -->
+                    {% for size_variant in variant_product.variants %}
+                      {% if size_variant.options[color_index] == card_product.options[color_index] %}
+                        {% if size_variant.metafields.custom.second_image != blank %}
+                          <!-- Assign the second image if found -->
+                          {% assign second_image = size_variant.metafields.custom.second_image %}
+                          {% break %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+
+                    <!-- If no second image was found, fall back to the default feature image -->
+                    {% if second_image == null %}
+                      {% assign second_image = card_product.featured_image %}
+                    {% endif %}
+
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+
                 <img
                   srcset="
                     {%- if second_image.width >= 165 -%}{{ second_image | image_url: width: 165 }} 165w,{%- endif -%}

@@ -211,7 +211,7 @@
                     {% comment %} Find the correct second image for this color variant {% endcomment %}
                     {% assign second_image = null %}
                     {% for variant in product.variants %}
-                      {% if variant.options[color_index] == color %}
+                      {% if variant.id == color_variant.id %}
                         {% assign second_image = variant.metafields.custom.second_image %}
                         {% break %}
                       {% endif %}
@@ -239,8 +239,7 @@
                         lazy_load: lazy_load,
                         skip_styles: skip_card_product_styles,
                         quick_add: section.settings.quick_add,
-                        section_id: section.id,
-                        second_image: second_image
+                        section_id: section.id
                       %}
                     </li>
                     {%- assign skip_card_product_styles = true -%}
