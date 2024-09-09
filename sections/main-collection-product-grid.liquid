@@ -173,12 +173,14 @@
 
                 {% comment %} Collect unique colors manually {% endcomment %}
                 {% assign unique_colors = '' %}
+
                 {% for variant in product.variants %}
                   {% assign color_option = variant.options[color_index] %}
                   {% unless unique_colors contains color_option %}
                     {% assign unique_colors = unique_colors | append: color_option | append: ',' %}
                   {% endunless %}
                 {% endfor %}
+
                 {% assign unique_colors = unique_colors | split: ',' | uniq %}
 
                 {% comment %} Just loop based on unique colors {% endcomment %}
@@ -204,8 +206,8 @@
                     {% comment %} Find the correct second image for this color variant {% endcomment %}
                     {% assign second_image = null %}
                     {% for variant in product.variants %}
-                      {% if variant.options[color_index] == color and variant.options[size_index] == 'S' %}
-                        {% assign second_image = variant.featured_media %}
+                      {% if variant.options[color_index] == color %}
+                        {% assign second_image = variant.metafields.custom.second_image %}
                         {% break %}
                       {% endif %}
                     {% endfor %}
@@ -253,24 +255,15 @@
   {%- endif -%}
 </div>
 
-{% assign second_image = collection.products[1].variants[5].metafields.custom.second_image %}
-{% if second_image %}
-  <script>
-    var secondImage = '{{ second_image | escape }}'; // Use escape to handle any special characters
-    console.log('Second Image: ', secondImage);
-  </script>
-{% else %}
-  <p>Second image metafield not found.</p>
-{% endif %}
 <script>
   // var collection = {{ collection | json }};
   // console.log(collection);
 
   var products = {{ collection.products | json }};
-  console.log("Products: ", products);
+  // console.log("Products: ", products);
 
-  var variants = {{ collection.products[1].variants[7].metafields.custom.second_image }};
-  console.log("Variants: ", variants);
+  var variants = {{ collection.products[1].variants | json }};
+  // console.log("Variants: ", variants);
 
   // var variant = {{ collection.products[0].variants[0] | json }};
   // console.log("Variant: ", variant);
