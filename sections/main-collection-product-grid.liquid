@@ -161,8 +161,8 @@
               {% comment %} Start of Loop for Products in Collection {% endcomment %}
               {%- for product in collection.products -%}
                 {% comment %} Determine the indices for color and size dynamically {% endcomment %}
-                {% assign color_index = 0 %}
-                {% assign size_index = 1 %}
+                {% assign color_index = -1 %}
+                {% assign size_index = -1 %}
                 {% for option in product.options_with_values %}
                   {% if option.name == 'Color' %}
                     {% assign color_index = forloop.index0 %}
@@ -170,6 +170,11 @@
                     {% assign size_index = forloop.index0 %}
                   {% endif %}
                 {% endfor %}
+
+                {% comment %} If no color or size found, continue with the next product {% endcomment %}
+                {% if color_index == -1 or size_index == -1 %}
+                  {% continue %}
+                {% endif %}
 
                 {% comment %} Collect unique colors manually {% endcomment %}
                 {% assign unique_colors = '' %}
@@ -222,8 +227,10 @@
                       {% comment %} Render the Product Snippet for this unique color variant {% endcomment %}
                       {% render 'card-product',
                         display_variants_as_different_cards: true,
-                        card_product: product,
-                        card_product_variant: color_variant,
+                        card_product: color_variant,
+                        variant_product: product,
+                        color_index: color_index,
+                        size_index: size_index,
                         media_aspect_ratio: section.settings.image_ratio,
                         image_shape: section.settings.image_shape,
                         show_secondary_image: section.settings.show_secondary_image,
