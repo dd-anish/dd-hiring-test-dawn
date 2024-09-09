@@ -75,10 +75,123 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "collection_list_YTPYr8": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_kEYpVT": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "polo-t-shirt"
+          }
+        },
+        "featured_collection_WVnAqh": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "featured_collection_9UjqRi": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_kEYpVT",
+        "featured_collection_WVnAqh",
+        "featured_collection_9UjqRi"
+      ],
+      "settings": {
+        "title": "Collections",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "featured_product_rrQ3jB": {
+      "type": "featured-product",
+      "blocks": {
+        "text_LnGgrw": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_Pgc7HD": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_drNqCH": {
+          "type": "price",
+          "settings": {
+          }
+        },
+        "variant_picker_fKe3hT": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_EUtnWW": {
+          "type": "quantity_selector",
+          "settings": {
+          }
+        },
+        "buy_buttons_UGYjkT": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_Kz86wc": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_LnGgrw",
+        "title_Pgc7HD",
+        "price_drNqCH",
+        "variant_picker_fKe3hT",
+        "quantity_selector_EUtnWW",
+        "buy_buttons_UGYjkT",
+        "share_Kz86wc"
+      ],
+      "settings": {
+        "product": "polo-t-shirt",
+        "color_scheme": "",
+        "secondary_background": true,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
     "featured_collection",
-    "collage"
+    "collage",
+    "collection_list_YTPYr8",
+    "featured_product_rrQ3jB"
   ]
 }
