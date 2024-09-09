@@ -219,6 +219,7 @@
                     >
                       {% comment %} Render the Product Snippet for this unique color variant {% endcomment %}
                       {% render 'card-product',
+                        display_variants_as_different_cards: true,
                         card_product: product,
                         card_product_variant: color_variant,
                         media_aspect_ratio: section.settings.image_ratio,
@@ -252,6 +253,15 @@
   {%- endif -%}
 </div>
 
+{% assign second_image = collection.products[1].variants[5].metafields.custom.second_image %}
+{% if second_image %}
+  <script>
+    var secondImage = '{{ second_image | escape }}'; // Use escape to handle any special characters
+    console.log('Second Image: ', secondImage);
+  </script>
+{% else %}
+  <p>Second image metafield not found.</p>
+{% endif %}
 <script>
   // var collection = {{ collection | json }};
   // console.log(collection);
@@ -259,7 +269,7 @@
   var products = {{ collection.products | json }};
   console.log("Products: ", products);
 
-  var variants = {{ collection.products[0].variants | json }};
+  var variants = {{ collection.products[1].variants[7].metafields.custom.second_image }};
   console.log("Variants: ", variants);
 
   // var variant = {{ collection.products[0].variants[0] | json }};
