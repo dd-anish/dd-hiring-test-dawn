@@ -93,6 +93,8 @@
                     {% assign atleast_one_available = false %}
                     {% assign second_image = null %}
                     {% assign second_images = '' %}
+                    {% assign second_images_urls = '' %}
+                    {% assign second_image_widths = '' %}
 
                     {% for size_variant in variant_product.variants %}
                       {% if size_variant.options[color_index] == card_product.options[color_index] %}
@@ -120,17 +122,23 @@
                   {% endif %}
                 {% endfor %}
 
+                {% assign second_image_url = second_image | image_url %}
+                {% assign second_image_width = second_image.width | default: 533 %}
+
+                {% assign second_images_urls = second_images_urls | append: second_image_url | append: ',' %}
+                {% assign second_image_widths = second_image_widths | append: second_image_width | append: ',' %}
+
                 <img
                   srcset="
-                    {%- if second_image.width >= 165 -%}{{ second_image | image_url: width: 165 }} 165w,{%- endif -%}
-                    {%- if second_image.width >= 360 -%}{{ second_image | image_url: width: 360 }} 360w,{%- endif -%}
-                    {%- if second_image.width >= 533 -%}{{ second_image | image_url: width: 533 }} 533w,{%- endif -%}
-                    {%- if second_image.width >= 720 -%}{{ second_image | image_url: width: 720 }} 720w,{%- endif -%}
-                    {%- if second_image.width >= 940 -%}{{ second_image | image_url: width: 940 }} 940w,{%- endif -%}
-                    {%- if second_image.width >= 1066 -%}{{ second_image | image_url: width: 1066 }} 1066w,{%- endif -%}
-                    {{ second_image | image_url }} {{ second_image.width }}w
+                    {%- if second_image_url and second_image_width >= 165 -%}{{ second_image_url | image_url: width: 165 }} 165w,{%- endif -%}
+                    {%- if second_image_url and second_image_width >= 360 -%}{{ second_image_url | image_url: width: 360 }} 360w,{%- endif -%}
+                    {%- if second_image_url and second_image_width >= 533 -%}{{ second_image_url | image_url: width: 533 }} 533w,{%- endif -%}
+                    {%- if second_image_url and second_image_width >= 720 -%}{{ second_image_url | image_url: width: 720 }} 720w,{%- endif -%}
+                    {%- if second_image_url and second_image_width >= 940 -%}{{ second_image_url | image_url: width: 940 }} 940w,{%- endif -%}
+                    {%- if second_image_url and second_image_width >= 1066 -%}{{ second_image_url | image_url: width: 1066 }} 1066w,{%- endif -%}
+                    {{ second_image_url }} {{ second_image_width }}w
                   "
-                  src="{{ second_image | image_url: width: 533 }}"
+                  src="{{ second_image_url | image_url: width: 533 }}"
                   sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
                   alt=""
                   class="motion-reduce"
@@ -741,4 +749,6 @@
   // console.log("Single Card Variant: ", {{ card_product | json }});
   // console.log("First Image: ", {{ card_product_variant | json }});
   console.log("Second Image New: ", {{ second_images | json }});
+  console.log("Second Image URLS: ", {{ second_images_urls | json }});
+  console.log("Second Image Widths: ", {{ second_image_widths | json }});
 </script>
