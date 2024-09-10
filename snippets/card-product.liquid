@@ -260,6 +260,10 @@
             >
               {% comment %} Display Product Title + Variant Color {% endcomment %}
               {{ variant_product.title | escape }}
+              {% if display_variants_as_different_cards %}
+                {% assign variant_color = card_product.options[color_index] %}
+                ({{ variant_color }})
+              {% endif %}
             </a>
           </h3>
           <div class="card-information">
