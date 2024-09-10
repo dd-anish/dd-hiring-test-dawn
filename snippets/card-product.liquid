@@ -106,11 +106,7 @@
                           {% assign second_image = size_variant.metafields.custom.second_image %}
 
                           <!-- Append the second image -->
-                          {% capture second_images_temp %}
-        {{ second_images }}{{ second_image }}{% if forloop.last == false %},{% endif %}
-      {% endcapture %}
-
-                          {% assign second_images = second_images_temp %}
+                          {% assign second_images = second_images | append: second_image | append: ',' %}
                         {% endif %}
                       {% endif %}
                     {% endfor %}
@@ -744,5 +740,5 @@
   // console.log("Test: ", {{ variant_product.variants | json }});
   // console.log("Single Card Variant: ", {{ card_product | json }});
   // console.log("First Image: ", {{ card_product_variant | json }});
-  console.log("Second Image: ", {{ second_images | json }});
+  console.log("Second Image New: ", {{ second_images | json }});
 </script>
