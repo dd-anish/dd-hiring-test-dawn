@@ -92,7 +92,6 @@
                     <!-- Iterate through each size variant for this color -->
                     {% assign atleast_one_available = false %}
                     {% assign second_image = null %}
-                    {% assign second_image_urls = '' %}
 
                     {% for size_variant in variant_product.variants %}
                       {% if size_variant.options[color_index] == card_product.options[color_index] %}
@@ -119,8 +118,6 @@
 
                 {% assign second_image_url = second_image | image_url %}
                 {% assign second_image_width = second_image.width | default: 533 %}
-
-                {% assign second_image_urls = second_image_urls | append: second_image_url | append: ',' %}
 
                 <img
                   srcset="
@@ -231,7 +228,10 @@
               >
                 {{- 'products.product.sold_out' | t -}}
               </span>
-            {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
+            {%- elsif card_product.compare_at_price > card_product.price
+              and card_product.available
+              or atleast_one_available
+            -%}
               <span
                 id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
                 class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}"
@@ -660,7 +660,7 @@
         {% endif %}
         {% comment %} Media Card Badges {% endcomment %}
         <div class="card__badge {{ settings.badge_position }}">
-          {%- if card_product.available == false or atleast_one_available == false -%}
+          {%- if card_product.available == false and atleast_one_available == false -%}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
               class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
@@ -743,6 +743,6 @@
   // console.log("Single Card Variant: ", {{ card_product | json }});
   // console.log("First Image: ", {{ card_product_variant | json }});
   // console.log("Second Image New: ", {{ second_images | json }});
-  console.log("Second Image URLS: ", {{ second_image_urls | json }});
+  // console.log("Second Image URLS: ", {{ second_image_urls | json }});
   // console.log("Second Image Widths: ", {{ second_image_widths | json }});
 </script>
