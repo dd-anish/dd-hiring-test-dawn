@@ -36,19 +36,101 @@
         role="list"
       >
         {% assign skip_card_product_styles = false %}
-        {% for recommendation in recommendations.products %}
-          <li class="grid__item">
-            {% render 'card-product',
-              card_product: recommendation,
-              media_aspect_ratio: section.settings.image_ratio,
-              image_shape: section.settings.image_shape,
-              show_secondary_image: section.settings.show_secondary_image,
-              show_vendor: section.settings.show_vendor,
-              show_rating: section.settings.show_rating,
-              skip_styles: skip_card_product_styles
-            %}
-          </li>
-          {%- assign skip_card_product_styles = true -%}
+        {% for product in recommendations.products %}
+          {% comment %} Determine the indices for color and size dynamically {% endcomment %}
+          {% assign color_index = -1 %}
+          {% assign size_index = -1 %}
+          {% for option in product.options_with_values %}
+            {% if option.name == 'Color' %}
+              {% assign color_index = forloop.index0 %}
+            {% elsif option.name == 'Size' %}
+              {% assign size_index = forloop.index0 %}
+            {% endif %}
+          {% endfor %}
+
+          {% comment %} If no color or size found, then render only single product {% endcomment %}
+          {% if color_index == -1 and size_index == -1 %}
+            <li
+              class="grid__item"
+            >
+              {% comment %} Render the Product Snippet without different variants {% endcomment %}
+              {% render 'card-product',
+                display_variants_as_different_cards: false,
+                card_product: product,
+                media_aspect_ratio: section.settings.image_ratio,
+                image_shape: section.settings.image_shape,
+                show_secondary_image: section.settings.show_secondary_image,
+                show_vendor: section.settings.show_vendor,
+                show_rating: section.settings.show_rating,
+                lazy_load: false,
+                skip_styles: skip_card_product_styles,
+                quick_add: section.settings.quick_add,
+                section_id: section.id
+              %}
+            </li>
+
+          {% else %}
+            {% comment %} Collect unique colors manually {% endcomment %}
+            {% assign unique_colors = '' %}
+
+            {% for variant in product.variants %}
+              {% assign color_option = variant.options[color_index] %}
+              {% unless unique_colors contains color_option %}
+                {% assign unique_colors = unique_colors | append: color_option | append: ',' %}
+              {% endunless %}
+            {% endfor %}
+
+            {% assign unique_colors = unique_colors | split: ',' | uniq %}
+
+            {% comment %} Just loop based on unique colors {% endcomment %}
+            {% for color in unique_colors %}
+              {% comment %} To prevent processing empty strings adding unless {% endcomment %}
+              {% unless color == '' %}
+                {% comment %} Manually find the first variant that matches the current color {% endcomment %}
+                {% assign color_variant = null %}
+                {% for variant in product.variants %}
+                  {% if variant.options[color_index] == color %}
+                    {% assign color_variant = variant %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+
+                {% comment %} Debugging: Print the color_variant to check if it's being assigned correctly {% endcomment %}
+                {% comment %} {{ color_variant | json }} {% endcomment %}
+
+                {%- if forloop.index > 2 -%}
+                  {%- assign lazy_load = true -%}
+                {%- endif -%}
+
+                <li
+                  class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                  {% if settings.animations_reveal_on_scroll %}
+                    data-cascade
+                    style="--animation-order: {{ forloop.index }};"
+                  {% endif %}
+                >
+                  {% comment %} Render the Product Snippet for this unique color variant {% endcomment %}
+                  {% render 'card-product',
+                    display_variants_as_different_cards: true,
+                    card_product: color_variant,
+                    variant_product: product,
+                    color_index: color_index,
+                    size_index: size_index,
+                    media_aspect_ratio: section.settings.image_ratio,
+                    image_shape: section.settings.image_shape,
+                    show_secondary_image: section.settings.show_secondary_image,
+                    show_vendor: section.settings.show_vendor,
+                    show_rating: section.settings.show_rating,
+                    lazy_load: lazy_load,
+                    skip_styles: skip_card_product_styles,
+                    quick_add: section.settings.quick_add,
+                    section_id: section.id
+                  %}
+                </li>
+                {%- assign skip_card_product_styles = true -%}
+              {%- endunless -%}
+            {% endfor %}
+          {% endif %}
         {% endfor %}
       </ul>
     {% endif %}
