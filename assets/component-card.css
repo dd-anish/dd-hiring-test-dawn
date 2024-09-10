@@ -435,6 +435,12 @@
   
 }
 
+.variant-color{
+  color: #16325B;
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+
 .variant-sizes .out-of-stock{
   text-decoration: line-through;
   background: #777779;
