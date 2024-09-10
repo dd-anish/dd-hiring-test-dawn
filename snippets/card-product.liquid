@@ -92,9 +92,9 @@
                     <!-- Iterate through each size variant for this color -->
                     {% assign atleast_one_available = false %}
                     {% assign second_image = null %}
-                    {% assign second_images = '' %}
+                    {% comment %} {% assign second_images = '' %}
                     {% assign second_images_urls = '' %}
-                    {% assign second_image_widths = '' %}
+                    {% assign second_image_widths = '' %} {% endcomment %}
 
                     {% for size_variant in variant_product.variants %}
                       {% if size_variant.options[color_index] == card_product.options[color_index] %}
@@ -108,7 +108,7 @@
                           {% assign second_image = size_variant.metafields.custom.second_image %}
 
                           <!-- Append the second image -->
-                          {% assign second_images = second_images | append: second_image | append: ',' %}
+                          {% comment %} {% assign second_images = second_images | append: second_image | append: ',' %} {% endcomment %}
                         {% endif %}
                       {% endif %}
                     {% endfor %}
@@ -122,11 +122,11 @@
                   {% endif %}
                 {% endfor %}
 
-                {% assign second_image_url = second_image | image_url %}
-                {% assign second_image_width = second_image.width | default: 533 %}
+               {% comment %}  {% assign second_image_url = second_image | image_url %}
+                {% assign second_image_width = second_image.width | default: 533 %} {% endcomment %}
 
-                {% assign second_images_urls = second_images_urls | append: second_image_url | append: ',' %}
-                {% assign second_image_widths = second_image_widths | append: second_image_width | append: ',' %}
+              {% comment %}   {% assign second_images_urls = second_images_urls | append: second_image_url | append: ',' %}
+                {% assign second_image_widths = second_image_widths | append: second_image_width | append: ',' %} {% endcomment %}
 
                 <img
                   srcset="
@@ -748,7 +748,7 @@
   // console.log("Test: ", {{ variant_product.variants | json }});
   // console.log("Single Card Variant: ", {{ card_product | json }});
   // console.log("First Image: ", {{ card_product_variant | json }});
-  console.log("Second Image New: ", {{ second_images | json }});
-  console.log("Second Image URLS: ", {{ second_images_urls | json }});
-  console.log("Second Image Widths: ", {{ second_image_widths | json }});
+  // console.log("Second Image New: ", {{ second_images | json }});
+  // console.log("Second Image URLS: ", {{ second_images_urls | json }});
+  // console.log("Second Image Widths: ", {{ second_image_widths | json }});
 </script>
