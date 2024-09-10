@@ -41,13 +41,6 @@
     endif
   -%}
 
-  <script>
-    // console.log("Single Card Product: ", {{ variant_product | json }});
-    // console.log("Test: ", {{ variant_product.variants | json }});
-    // console.log("Single Card Variant: ", {{ card_product | json }});
-    // console.log("First Image: ", {{ card_product_variant | json }});
-    // console.log("Second Image: ", {{ second_image | json }});
-  </script>
   <div class="card-wrapper product-card-wrapper underline-links-hover">
     <div
       class="
@@ -99,16 +92,25 @@
                     <!-- Iterate through each size variant for this color -->
                     {% assign atleast_one_available = false %}
                     {% assign second_image = null %}
+                    {% assign second_images = '' %}
 
                     {% for size_variant in variant_product.variants %}
                       {% if size_variant.options[color_index] == card_product.options[color_index] %}
-                        <!-- Check if the size variant is available -->
+                        <!-- Check if the at least 1 size variant is available -->
                         {% if size_variant.available %}
                           {% assign atleast_one_available = true %}
                         {% endif %}
+
                         {% if size_variant.metafields.custom.second_image != blank %}
                           <!-- Assign the second image if found -->
                           {% assign second_image = size_variant.metafields.custom.second_image %}
+
+                          <!-- Append the second image -->
+                          {% capture second_images_temp %}
+        {{ second_images }}{{ second_image }}{% if forloop.last == false %},{% endif %}
+      {% endcapture %}
+
+                          {% assign second_images = second_images_temp %}
                         {% endif %}
                       {% endif %}
                     {% endfor %}
@@ -660,14 +662,17 @@
         {% endif %}
         {% comment %} Media Card Badges {% endcomment %}
         <div class="card__badge {{ settings.badge_position }}">
-          {%- if card_product.available == false and atleast_one_available == false -%}
+          {%- if card_product.available == false or atleast_one_available == false -%}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
               class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
             >
               {{- 'products.product.sold_out' | t -}}
             </span>
-          {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
+          {%- elsif card_product.compare_at_price > card_product.price
+            and card_product.available
+            or atleast_one_available
+          -%}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
               class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}"
@@ -733,3 +738,11 @@
     </div>
   </div>
 {%- endif -%}
+
+<script>
+  // console.log("Single Card Product: ", {{ variant_product | json }});
+  // console.log("Test: ", {{ variant_product.variants | json }});
+  // console.log("Single Card Variant: ", {{ card_product | json }});
+  // console.log("First Image: ", {{ card_product_variant | json }});
+  console.log("Second Image: ", {{ second_images | json }});
+</script>
