@@ -42,8 +42,9 @@
   -%}
 
   <script>
-    console.log("Single Card Product: ", {{ variant_product | json }});
-    console.log("Single Card Variant: ", {{ card_product | json }});
+    // console.log("Single Card Product: ", {{ variant_product | json }});
+    // console.log("Test: ", {{ variant_product.variants | json }});
+    // console.log("Single Card Variant: ", {{ card_product | json }});
     // console.log("First Image: ", {{ card_product_variant | json }});
     // console.log("Second Image: ", {{ second_image | json }});
   </script>
@@ -96,12 +97,18 @@
                 {% for variant in variant_product.variants %}
                   {% if variant.options[color_index] == card_product.options[color_index] %}
                     <!-- Iterate through each size variant for this color -->
+                    {% assign atleast_one_available = false %}
+                    {% assign second_image = null %}
+
                     {% for size_variant in variant_product.variants %}
                       {% if size_variant.options[color_index] == card_product.options[color_index] %}
+                        <!-- Check if the size variant is available -->
+                        {% if size_variant.available %}
+                          {% assign atleast_one_available = true %}
+                        {% endif %}
                         {% if size_variant.metafields.custom.second_image != blank %}
                           <!-- Assign the second image if found -->
                           {% assign second_image = size_variant.metafields.custom.second_image %}
-                          {% break %}
                         {% endif %}
                       {% endif %}
                     {% endfor %}
@@ -211,12 +218,13 @@
                 class="full-unstyled-link"
                 aria-labelledby="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }} NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
               >
-                {{ card_product.title | escape }}
+                No {{ card_product.title | escape }}
               </a>
             </h3>
           </div>
+          {% comment %} No Media Card Badges {% endcomment %}
           <div class="card__badge {{ settings.badge_position }}">
-            {%- if card_product.available == false -%}
+            {%- if card_product.available == false and atleast_one_available == false -%}
               <span
                 id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
                 class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
@@ -299,7 +307,13 @@
             {%- endif -%}
 
             {% comment %} Rendering Price Snippet {% endcomment %}
-            {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+            {% render 'price',
+              product: card_product,
+              price_class: '',
+              show_compare_at_price: true,
+              display_variants_as_different_cards: true,
+              atleast_one_available: atleast_one_available
+            %}
 
             {%- if card_product.quantity_price_breaks_configured? -%}
               {% if card_product.variants.size == 1 and quick_add == 'bulk' %}
@@ -644,8 +658,9 @@
             </div>
           {% endif %}
         {% endif %}
+        {% comment %} Media Card Badges {% endcomment %}
         <div class="card__badge {{ settings.badge_position }}">
-          {%- if card_product.available == false -%}
+          {%- if card_product.available == false and atleast_one_available == false -%}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
               class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"

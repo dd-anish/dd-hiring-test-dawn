@@ -208,15 +208,6 @@
                       {%- assign lazy_load = true -%}
                     {%- endif -%}
 
-                    {% comment %} Find the correct second image for this color variant {% endcomment %}
-                    {% assign second_image = null %}
-                    {% for variant in product.variants %}
-                      {% if variant.id == color_variant.id %}
-                        {% assign second_image = variant.metafields.custom.second_image %}
-                        {% break %}
-                      {% endif %}
-                    {% endfor %}
-
                     <li
                       class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                       {% if settings.animations_reveal_on_scroll %}
