@@ -86,7 +86,7 @@
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
 
               {% comment %} Hover Image (Custom for Task) {% endcomment %}
-              {% if display_variants_as_different_cards %}
+              {% if display_variants_as_different_cards and show_secondary_image %}
                 {% for variant in variant_product.variants %}
                   {% if variant.options[color_index] == card_product.options[color_index] %}
                     <!-- Iterate through each size variant for this color -->
@@ -139,10 +139,7 @@
                 >
 
                 {% comment %} Hover Image (default) {% endcomment %}
-              {%- elsif card_product.media[1] != null
-                and show_secondary_image
-                and display_variants_as_different_cards
-              -%}
+              {%- elsif card_product.media[1] != null and show_secondary_image -%}
                 <img
                   srcset="
                     {%- if card_product.media[1].width >= 165 -%}{{ card_product.media[1] | image_url: width: 165 }} 165w,{%- endif -%}
@@ -166,7 +163,7 @@
           </div>
 
           {% comment %} Variant Sizes {% endcomment %}
-          {% if display_variants_as_different_cards %}
+          {% if display_variants_as_different_cards and size_index != -1 %}
             <div class="variant-overlay variant-sizes" data-product-id="{{ card_product.id }}">
               <div class="variant-sizes-heading">Directly add size variant to cart</div>
               {% for variant in variant_product.variants %}
@@ -259,10 +256,12 @@
               aria-labelledby="CardLink-{{ section_id }}-{{ card_product.id }} Badge-{{ section_id }}-{{ card_product.id }}"
             >
               {% comment %} Display Product Title + Variant Color {% endcomment %}
-              {{ variant_product.title | escape }}
+
               {% if display_variants_as_different_cards %}
                 {% assign variant_color = card_product.options[color_index] %}
-                ({{ variant_color }})
+                {{ variant_product.title | escape }} ({{ variant_color }})
+              {% else %}
+                {{ card_product.title | escape }}
               {% endif %}
             </a>
           </h3>
@@ -310,13 +309,21 @@
               </p>
             {%- endif -%}
 
+            {% comment %} Determine whether to show variants or not {% endcomment %}
+            {% if display_variants_as_different_cards %}
+              {% assign display_variants = true %}
+              {% assign atleast_available = atleast_one_available %}
+            {% else %}
+              {% assign display_variants = false %}
+              {% assign atleast_available = false %}
+            {% endif %}
             {% comment %} Rendering Price Snippet {% endcomment %}
             {% render 'price',
               product: card_product,
               price_class: '',
               show_compare_at_price: true,
-              display_variants_as_different_cards: true,
-              atleast_one_available: atleast_one_available
+              display_variants_as_different_cards: display_variants,
+              atleast_one_available: atleast_available
             %}
 
             {%- if card_product.quantity_price_breaks_configured? -%}
