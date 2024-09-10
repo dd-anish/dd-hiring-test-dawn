@@ -92,6 +92,7 @@
                     <!-- Iterate through each size variant for this color -->
                     {% assign atleast_one_available = false %}
                     {% assign second_image = null %}
+                    {% assign second_image_urls = '' %}
 
                     {% for size_variant in variant_product.variants %}
                       {% if size_variant.options[color_index] == card_product.options[color_index] %}
@@ -118,6 +119,8 @@
 
                 {% assign second_image_url = second_image | image_url %}
                 {% assign second_image_width = second_image.width | default: 533 %}
+
+                {% assign second_image_urls = second_image_urls | append: second_image_url | append: ',' %}
 
                 <img
                   srcset="
@@ -740,6 +743,6 @@
   // console.log("Single Card Variant: ", {{ card_product | json }});
   // console.log("First Image: ", {{ card_product_variant | json }});
   // console.log("Second Image New: ", {{ second_images | json }});
-  // console.log("Second Image URLS: ", {{ second_images_urls | json }});
+  console.log("Second Image URLS: ", {{ second_image_urls | json }});
   // console.log("Second Image Widths: ", {{ second_image_widths | json }});
 </script>
