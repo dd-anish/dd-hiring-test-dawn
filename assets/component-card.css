@@ -435,10 +435,14 @@
   
 }
 
-.variant-color{
-  color: #16325B;
-  padding: 2px 10px;
-  border-radius: 10px;
+.variant-color-dot{
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  display: inline-block;
+ border-radius: 50%;
+ border: 1px solid #1f1e1e;
+ 
 }
 
 .variant-sizes .out-of-stock{
