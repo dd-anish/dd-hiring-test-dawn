@@ -164,7 +164,7 @@
 
           {% comment %} Variant Sizes {% endcomment %}
           <!-- If there are no size variants for a product, you won't see the sizes card on hover -->
-          {% if display_variants_as_different_cards and size_index != -1 %}
+          {% if display_variants_as_different_cards and size_index != -1 and atleast_one_available %}
             <div class="variant-overlay variant-sizes" data-product-id="{{ card_product.id }}">
               <div class="variant-sizes-heading">Directly add size variant in the cart</div>
 
