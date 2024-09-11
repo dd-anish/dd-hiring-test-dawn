@@ -419,12 +419,6 @@
         {% comment %} Quick add features {% endcomment %}
         {%- assign current_product = card_product -%}
 
-        {% comment %}
-          {%- if display_variants_as_different_cards -%}
-            {%- assign current_product = variant_product -%}
-          {%- endif -%}
-        {% endcomment %}
-
         {% assign product_form_id = 'quick-add-' | append: section_id | append: current_product.id %}
 
         {% comment %} Quick Add Standard {% endcomment %}
@@ -486,7 +480,7 @@
                     >
                       {{- 'icon-close.svg' | inline_asset_content -}}
                     </button>
-                    <div id="QuickAddInfo-{{ current_product.id }}" class="quick-add-modal__content-info"></div>
+                    <div id="QuickAddInfo-{{ current_product.id }}" class="quick-add-modal__content-info">Test</div>
                   </div>
                 </quick-add-modal>
               {% else %}
